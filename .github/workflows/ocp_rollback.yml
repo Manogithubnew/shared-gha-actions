@@ -1,1 +1,35 @@
 
+
+name: Rollback 
+on:
+  workflow_call:
+    inputs:
+      deploy-env:
+        description: 'Env' 
+        type: string
+      live-service-found:
+        description: 'Found' 
+        type: string
+      approval:
+        description: 'Apprve env' 
+        type: string
+      blue-green-env:
+        description: 'Runner label' 
+        type: string
+  outputs:
+    deploy-map:
+    description: 'Deploy map'
+    vale: ${{ jobs.rollback.outputs.deploy-map'
+
+jobs:
+  rollback:
+  name:
+  environment:
+  runs-on:
+  outputs:
+    deploy-map:
+  steps:
+  - name:
+  
+ 
+        
