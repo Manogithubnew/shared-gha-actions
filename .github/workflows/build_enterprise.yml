@@ -1,1 +1,83 @@
+name: Build and scan
+on:
+  workflow_call:
+    inputs:
+      config-map:
+        description: 'Init stage CM' 
+        type: string
+      deployable-artifact:
+        description: 'Optional' 
+        type: string
+      build-type:
+        description: 'Build type (mvn, npm, etc' 
+        type: string
+      bot-deploy:
+        description: 'Deployment type' 
+        type: boolean
+      operation:
+        description: 'Operation' 
+        type: string
+      runner-label:
+        description: 'Runner labele' 
+        type: string
+      prod-flow:
+        description: 'Check for prod flow' 
+        type: boolean
+        default: false
+      skip-version-check:
+        description: 'Skip checking version in the image repo' 
+        type: boolean
+        default: false
 
+    outputs:
+      build-type:
+        value: ${{ job.cicd-maps.outputs.build-type}}
+        description: 'Build identify the build action ( mvn, npm)'
+      docker-build:
+        value:  ${{ job.cicd-maps.outputs.docker-build}}
+        description: 'Boolian value for build image'
+      is-library:
+        value:  ${{ job.cicd-maps.outputs.is-library}}
+        description: 'Boolian value for app is-library'
+        (similarly add for others)
+
+env:
+  TEAM_APP_KEY: ${{ secrets.TEAM_APP_KEY}}
+  TEAM_APP_ID: ${{ vars.TEAM_APP_ID}}
+
+jobs:
+  cicd-maps:
+  name: <name>
+  runs-on: ${{ inputs.runner-label || 'self-hosted' }}
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+  if: |
+    !startsWith(github.head_ref, 'feature/extention-jobs') && inputs.operation != 'update-main-workflow'
+  outputs:
+    build-type: ${{ steps.config-map.oputputs.build-type}}
+    (similarly add for others)
+  steps:
+    - name: Checkout source code
+      uses: < path of shared action repo>@v.<release branch or tag>
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.branch }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build env vars
+    - name: Create CI map
+    - name: Pipeline -opa-verification
+    - name: OPA validation on env config
+    - name: Check image repo version
+    - name: Create AEM map
+    - name: Create UCD map
+    - name: Create CD map
+    - name: Archive CD map
+  update-workflow:
+    name:
+    runs-on:
+      -self-hosted
+      
+        
+    
+        
+        
