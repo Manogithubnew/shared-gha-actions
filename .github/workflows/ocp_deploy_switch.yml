@@ -1,1 +1,20 @@
 
+
+name: Switch from test to working 
+on:
+  workflow_call:
+    inputs:
+      deploy-env:
+        description: 'Env' 
+        type: string
+      routing:
+        description: 'Route' 
+        type: string
+      approval:
+        description: 'Apprve env' 
+        type: string
+      previous-deploy-info:
+        description: 'info' 
+        type: string
+ 
+        
