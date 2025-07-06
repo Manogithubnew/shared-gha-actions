@@ -1,1 +1,19 @@
-
+name: Deploy workflow
+on:
+  workflow_call:
+    inputs:
+      operation:
+        description: 'Operation' 
+        type: string
+      deploy-env:
+        description: 'Env' 
+        type: string
+      repository:
+        description: 'git repository' 
+        type: string
+        default: ${{ github.repository }}
+      branch:
+        description: 'git repo' 
+        type: string
+        default: ${{ github.ref }}
+        
