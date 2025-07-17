@@ -1,0 +1,18 @@
+# Set global owner
+*                  @your-org/dev-team
+
+# Backend files
+/backend/          @your-org/backend-team
+
+# Frontend files
+/frontend/         @your-org/frontend-team
+
+# Specific file
+main.py            @your-username
+
+# GitHub workflows
+.github/workflows/ @your-org/devops-team
+
+# YAML files (all .yml/.yaml files)
+*.yml              @your-org/devops-team
+*.yaml             @your-org/devops-team
