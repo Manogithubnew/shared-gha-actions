@@ -1,0 +1,40 @@
+name: 'SonarQube Scanner'
+description: 'Runs a SonarQube scan using the SonarScanner CLI'
+inputs:
+  sonar_host_url:
+    description: 'SonarQube server URL'
+    required: true
+  sonar_token:
+    description: 'Authentication token for SonarQube'
+    required: true
+  project_key:
+    description: 'SonarQube project key'
+    required: true
+  project_name:
+    description: 'SonarQube project name'
+    required: true
+  project_version:
+    description: 'Version of the project'
+    required: false
+    default: '1.0'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install SonarScanner
+      shell: bash
+      run: |
+        curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+        unzip sonar-scanner.zip -d $HOME/.sonar
+        echo "$HOME/.sonar/sonar-scanner-5.0.1.3006-linux/bin" >> $GITHUB_PATH
+
+    - name: Run SonarQube Scan
+      shell: bash
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=${{ inputs.project_key }} \
+          -Dsonar.projectName=${{ inputs.project_name }} \
+          -Dsonar.projectVersion=${{ inputs.project_version }} \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=${{ inputs.sonar_host_url }} \
+          -Dsonar.login=${{ inputs.sonar_token }}
