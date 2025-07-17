@@ -1,0 +1,43 @@
+name: 'OCP Deploy Action'
+description: 'Deploys application to OpenShift using oc CLI and deploy_utils.py'
+author: 'Your Name or Org'
+inputs:
+  ocp_api_url:
+    description: 'OpenShift API URL'
+    required: true
+  ocp_token:
+    description: 'OpenShift access token'
+    required: true
+  ocp_project:
+    description: 'OpenShift project/namespace'
+    required: true
+  deployment_file:
+    description: 'Path to the deployment YAML manifest'
+    required: true
+  deployment_name:
+    description: 'Name of the deployment to restart'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        pip install pyyaml
+      shell: bash
+
+    - name: Run deploy script
+      run: |
+        python deploy_utils.py
+      shell: bash
+      env:
+        OCP_API_URL: ${{ inputs.ocp_api_url }}
+        OCP_TOKEN: ${{ inputs.ocp_token }}
+        OCP_PROJECT: ${{ inputs.ocp_project }}
+        DEPLOY_FILE: ${{ inputs.deployment_file }}
+        DEPLOYMENT_NAME: ${{ inputs.deployment_name }}
